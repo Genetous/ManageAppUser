@@ -1,0 +1,13 @@
+.fixed {
+    position: fixed;
+}
+.toastBody {
+    font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+    color: #d2d3d4; /* #10171D */
+    background: rgba(0, 0, 0, 0.0) !important;
+    font-size: 0.875rem !important;
+  }
+  .toastProgress {
+    background: rgba(0, 0, 0, 0.0) !important;
+  }
+  
