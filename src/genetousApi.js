@@ -27,13 +27,13 @@ export const Methods = {
     AddUpdateRules:rule_engine + '/add/methods',
     DeleteRule:rule_engine + '/delete/method',
     GetAppSecret:rule_engine + '/get/appSecret',
-    LoginUser:rule_engine + '/login',
     GetApplications:rule_engine + '/applications',
 
     VerifyToken: auth_service + '/verify',
     KillToken: auth_service + '/logout',
     Auth: auth_service + '/gen/auth',
-    Client:auth_service + '/gen/client'
+    Client:auth_service + '/gen/client',
+    LoginUser:auth_service + '/login',
 
 }
 async function setTokenToLocalStorage(token) {

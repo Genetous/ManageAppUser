@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as icon from '@coreui/icons';
 import { logout, organization } from "../genetousApi"
-import { connect,useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {
   CContainer,
   CHeader,
@@ -19,14 +19,14 @@ import AppToggleHook from "./AppToggleHook"
 export class AppHeader extends Component {
   constructor(props) {
     super(props);
-    
+
   }
 
   async logOut(e) {
-    var redirect = false;
     await logout().then(function (result) {
-      redirect = true;
+      this.removeStorage();
     }, err => {
+      this.removeStorage();
       if (err === 200) {
         alert("success");
       } else if (err === 400) {
@@ -35,43 +35,44 @@ export class AppHeader extends Component {
         alert("Forbidden")
       }
       else if (err === 401) {
-        redirect = true;
+        
       } else {
-        alert(err);
+
       }
     });
-    if (redirect) {
-      localStorage.removeItem("token")
-      localStorage.removeItem("clientId")
-      localStorage.removeItem("appId")
-      localStorage.removeItem("orgId")
-      delete organization.clientId;
-      this.props.handleRedirect();
-    }
+
     return false;
   }
-  
-render() {
-  return (
-    <CHeader position="sticky" className="mb-4">
-      <CContainer fluid>
-        <AppToggleHook/>
-        <CHeaderBrand><CIcon icon={logo} height={48} width={218} alt="Logo" /></CHeaderBrand>
-        
-        <CHeaderNav>
+  removeStorage() {
+    
+    localStorage.removeItem("token")
+    localStorage.removeItem("clientId")
+    localStorage.removeItem("appId")
+    localStorage.removeItem("orgId")
+    delete organization.clientId;
+    this.props.handleRedirect();
+  }
+  render() {
+    return (
+      <CHeader position="sticky" className="mb-4">
+        <CContainer fluid>
+          <AppToggleHook />
+          <CHeaderBrand><CIcon icon={logo} height={48} width={218} alt="Logo" /></CHeaderBrand>
 
-          <CNavItem>
-            <CNavLink href='#' onClick={this.logOut.bind(this)}>
-              <CIcon icon={icon.cilAccountLogout} size="lg" />
-            </CNavLink>
-          </CNavItem>
-        </CHeaderNav>
+          <CHeaderNav>
 
-      </CContainer>
+            <CNavItem>
+              <CNavLink href='#' onClick={this.logOut.bind(this)}>
+                <CIcon icon={icon.cilAccountLogout} size="lg" />
+              </CNavLink>
+            </CNavItem>
+          </CHeaderNav>
 
-    </CHeader>
-  )
-}
+        </CContainer>
+
+      </CHeader>
+    )
+  }
 }
 
 export default connect()(AppHeader);
