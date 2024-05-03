@@ -5,9 +5,14 @@ It allows you to create role-based permissions for functions in **Genetous Servi
 ## For installation
 
 ```console
-git clone https://github.com/Genetous/ManageAppGenetous.git
+git clone https://github.com/Genetous/ManageAppUser.git
 cd ManageAppGenetous
 npm install
+```
+### in .env file
+```console
+REACT_APP_AUTH_SERVICE=Your Auth Service Proxy Address on NGINX
+REACT_APP_RULE_ENGINE=Your Rule Engine Proxy Address on NGINX
 ```
 
 ### If you want to build
