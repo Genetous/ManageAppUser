@@ -10,7 +10,7 @@ cd ManageAppGenetous
 npm install
 ```
 ### in .env file
-```console
+```js
 REACT_APP_AUTH_SERVICE=Your Auth Service Proxy Address on NGINX
 REACT_APP_RULE_ENGINE=Your Rule Engine Proxy Address on NGINX
 ```
