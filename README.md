@@ -6,7 +6,7 @@ It allows you to create role-based permissions for functions in **Genetous Servi
 
 ```console
 git clone https://github.com/Genetous/ManageAppUser.git
-cd ManageAppGenetous
+cd ManageAppUser
 npm install
 ```
 ### in .env file
