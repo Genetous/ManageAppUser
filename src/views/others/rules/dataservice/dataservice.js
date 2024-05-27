@@ -7,6 +7,7 @@ import UpdateCollection from './updateCollection';
 import DeleteCollection from './deleteCollection';
 import DeleteRelation from './deleteRelation';
 import Execute from './execute';
+import Login from './login';
 import { ToastContainer, toast,Slide } from 'react-toastify';
 import Popup from '../../../widgets/Popup';
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,7 +59,7 @@ export class Dataservice extends Component {
         super(props);
         this.state = {
             permissionItems: ["Create Collection", "Update Collection", "Delete Collection",
-                "Create Relation", "Delete Relation","Get Collections","Get Relations","Execute SQL"],
+                "Create Relation", "Delete Relation","Get Collections","Get Relations","Login","Execute SQL"],
             collectionCreateRules: [],
             activeKey: 1,
             activeSubKeys: [1, 1, 1, 1, 1],
@@ -70,7 +71,7 @@ export class Dataservice extends Component {
             error: false,
             status: -1,
             message: "",
-            lists:[false,false,false,false,false,false,false],
+            lists:[false,false,false,false,false,false,false,false],
             visible: false,
             yesNoVisible: false,
             yesNoQuestion: "",
@@ -429,7 +430,7 @@ export class Dataservice extends Component {
                             </CTabPane>
                             <CTabPane role="tabpanel" aria-labelledby="contact-tab" visible={this.state.activeKey === 8}>
                             {this.state.activeKey === 8 &&
-                                <Execute
+                                <Login
                                     handleRedirect={this.handleRedirect}
                                     toastShow={this.toastShow}
                                     newRuleAdd={this.newRuleAdd}
@@ -438,6 +439,19 @@ export class Dataservice extends Component {
                                     getRules={this.getRules}
                                     setData={this.setData}
                                     position={8}  />
+                            }
+                            </CTabPane>
+                            <CTabPane role="tabpanel" aria-labelledby="contact-tab" visible={this.state.activeKey === 8}>
+                            {this.state.activeKey === 9 &&
+                                <Execute
+                                    handleRedirect={this.handleRedirect}
+                                    toastShow={this.toastShow}
+                                    newRuleAdd={this.newRuleAdd}
+                                    deleteRole={this.deleteRole}
+                                    addUpdateRule={this.addUpdateRule}
+                                    getRules={this.getRules}
+                                    setData={this.setData}
+                                    position={9}  />
                             }
                             </CTabPane>
                         </CTabContent>
