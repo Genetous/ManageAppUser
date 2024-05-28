@@ -57,7 +57,30 @@ export class Applications extends Component {
             this.setState({ redirect: true })
     }
     componentDidMount() {
-        this.getApplications();
+        var arr = ["clientId"]
+        for (var i = 0; i < arr.length; ++i) {
+            var key = arr[i];
+            if (localStorage.getItem(key) == null || localStorage.getItem(key) == "") {
+                this.handleRedirect();
+                return;
+            }
+        }
+        var arr2 = ["appId", "orgId"]
+        for (var i = 0; i < arr2.length; ++i) {
+            var key = arr2[i];
+            if (localStorage.getItem(key) == null || localStorage.getItem(key) == "") {
+                this.handleRedirectApp();
+                return;
+            }
+        }
+        var now=Date.now()/1000;
+        var time=localStorage.getItem("timeout")/1000;
+        if((now-time)>3600){
+            localStorage.setItem("token","");
+            this.handleRedirect();
+        }else{
+            this.getApplications();
+        }
     }
     async getApplications() {
         var orgId = localStorage.getItem('orgId')
@@ -175,24 +198,18 @@ export class Applications extends Component {
     async logOut(e) {
         var redirect = false;
         await logout().then(function (result) {
-            redirect = true;
+
         }, err => {
-            if (err.status == 401) {
-                redirect = true;
-            } else {
-                message = err.message;
-            }
+
         });
-        if (redirect) {
-            localStorage.removeItem("token")
-            localStorage.removeItem("clientId")
-            localStorage.removeItem("appId")
-            localStorage.removeItem("orgId")
-            delete organization.clientId;
-            this.setState({ redirect: true })
-        } else {
-            this.toastShow("error", message);
-        }
+
+        localStorage.removeItem("token")
+        localStorage.removeItem("clientId")
+        localStorage.removeItem("appId")
+        localStorage.removeItem("orgId")
+        delete organization.clientId;
+        this.setState({ redirect: true })
+
         return false;
     }
     toastShow(type, message) {
@@ -249,7 +266,7 @@ export class Applications extends Component {
                     </CCol>
                 </CRow>
                 <CRow className="justify-content-center">
-                   
+
                     {this.state.applications.map((item, index) => (
                         <CCol sm={3}>
                             <CCard className="text-center" >
@@ -266,13 +283,13 @@ export class Applications extends Component {
                     ))
                     }
                 </CRow>
-               
+
                 <CRow className="justify-content-center">
                     <CCol className="text-center p-5">
                         <CButton onClick={this.logOut.bind(this)}><CIcon icon={icon.cilAccountLogout} /> Logout </CButton>
                     </CCol>
                 </CRow>
-               
+
             </CContainer>
         )
     }

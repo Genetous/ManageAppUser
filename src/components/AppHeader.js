@@ -24,9 +24,8 @@ export class AppHeader extends Component {
 
   async logOut(e) {
     await logout().then(function (result) {
-      this.removeStorage();
+      
     }, err => {
-      this.removeStorage();
       if (err === 200) {
         alert("success");
       } else if (err === 400) {
@@ -40,7 +39,7 @@ export class AppHeader extends Component {
 
       }
     });
-
+    this.removeStorage();
     return false;
   }
   removeStorage() {
