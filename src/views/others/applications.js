@@ -57,19 +57,12 @@ export class Applications extends Component {
             this.setState({ redirect: true })
     }
     componentDidMount() {
+       
         var arr = ["clientId"]
         for (var i = 0; i < arr.length; ++i) {
             var key = arr[i];
             if (localStorage.getItem(key) == null || localStorage.getItem(key) == "") {
                 this.handleRedirect();
-                return;
-            }
-        }
-        var arr2 = ["appId", "orgId"]
-        for (var i = 0; i < arr2.length; ++i) {
-            var key = arr2[i];
-            if (localStorage.getItem(key) == null || localStorage.getItem(key) == "") {
-                this.handleRedirectApp();
                 return;
             }
         }
