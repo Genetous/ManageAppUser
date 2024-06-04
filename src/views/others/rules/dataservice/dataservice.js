@@ -289,6 +289,80 @@ export class Dataservice extends Component {
         return data;
        
     }
+    async getIndex(model) {
+        var data=[]
+        var success=true;
+        await postWithSavedToken(model, Methods.GetIndex).then(function (result) {
+            data = result;
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        return data;
+       
+    }
+    async getQuery(model) {
+        var data=[]
+        var success=true;
+        await postWithSavedToken(model, Methods.GetSQLQuery).then(function (result) {
+            data = result;
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        return data;
+       
+    }
+    async setQuery(model) {
+        var success=true;
+        await postWithSavedToken(model, Methods.SetSQLQuery).then(function (result) {
+            success=result.success;
+            if (result.success == true) {
+                message = "Saved!"
+            } else {
+                message = result.message;
+            }
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        var type=success?"success":"error";
+        this.toastShow(type, message);
+       
+    }
+    async deleteQuery(model) {
+        var success=true;
+        await postWithSavedToken(model, Methods.DelSQLQuery).then(function (result) {
+            success=result.success;
+            if (result.success == true) {
+                message = "Deleted!"
+            } else {
+                message = result.message;
+            }
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        var type=success?"success":"error";
+        this.toastShow(type, message);
+       
+    }
     //////
     render() {
         const { redirect } = this.state;
@@ -441,15 +515,15 @@ export class Dataservice extends Component {
                                     position={8}  />
                             }
                             </CTabPane>
-                            <CTabPane role="tabpanel" aria-labelledby="contact-tab" visible={this.state.activeKey === 8}>
+                            <CTabPane role="tabpanel" aria-labelledby="contact-tab" visible={this.state.activeKey === 9}>
                             {this.state.activeKey === 9 &&
                                 <Execute
                                     handleRedirect={this.handleRedirect}
                                     toastShow={this.toastShow}
-                                    newRuleAdd={this.newRuleAdd}
-                                    deleteRole={this.deleteRole}
-                                    addUpdateRule={this.addUpdateRule}
-                                    getRules={this.getRules}
+                                    getIndex={this.getIndex}
+                                    getQuery={this.getQuery}
+                                    setQuery={this.setQuery}
+                                    delQuery={this.deleteQuery}
                                     setData={this.setData}
                                     position={9}  />
                             }

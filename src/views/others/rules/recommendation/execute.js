@@ -57,7 +57,7 @@ export class Execute extends Component {
         super(props);
         this.state = {
             executeRules: [],
-            selectedQuery: { indexName: "", sql: "", permitted: [] },
+            selectedQuery: { indexName: "", cypher: "", permitted: [] },
             newIndex: true,
             activeKey: 1,
             activeSubKeys: [1, 1, 1, 1, 1],
@@ -84,22 +84,22 @@ export class Execute extends Component {
         return key == subKeys[index].activeKey
     }
     componentDidMount() {
-        this.getExecuteSQL();
+        this.getExecuteCypher();
     }
-    async getExecuteSQL() {
+    async getExecuteCypher() {
         var orgId = localStorage.getItem('orgId')
         var appId = localStorage.getItem('appId')
         var model = {
             organizationId: orgId,
             applicationId: appId,
-            type: "sql"
+            type: "cypher"
         }
         var d = { ...this.state.executeRules };
         d = await this.props.getIndex(model);
 
         this.setState({ executeRules: d.data });
     }
-    async getSQL(val) {
+    async getCypher(val) {
         var orgId = localStorage.getItem('orgId')
         var appId = localStorage.getItem('appId')
         var model = {
@@ -118,10 +118,10 @@ export class Execute extends Component {
             <CCardBody>
                 <CRow className='mt-2 pb-2'>
                     <CCol>
-                        <CFormTextarea value={this.state.selectedQuery.sql}
-                            name='sql'
+                        <CFormTextarea value={this.state.selectedQuery.cypher}
+                            name='cypher'
                             onChange={this.changedValues.bind(this)}
-                            placeholder='Insert your sql command'
+                            placeholder='Insert your cypher command'
                         ></CFormTextarea>
                     </CCol>
                 </CRow>
@@ -165,8 +165,8 @@ export class Execute extends Component {
                 </CRow>
                 <CRow className='mt-2 pb-2'>
                     <CCol>
-                        <CFormTextarea name='sql' value={this.state.selectedQuery.sql}
-                            placeholder='Insert your sql command'
+                        <CFormTextarea name='cypher' value={this.state.selectedQuery.cypher}
+                            placeholder='Insert your cypher command'
                             onChange={this.changedValues.bind(this)}
                         ></CFormTextarea>
                     </CCol>
@@ -276,7 +276,7 @@ export class Execute extends Component {
         }
         await this.props.delQuery(model);
         this.createNew();
-        this.getExecuteSQL();
+        this.getExecuteCypher();
     }
     async updateIndex() { 
         this.setVisible(false);
@@ -289,10 +289,10 @@ export class Execute extends Component {
             applicationId: appId,
             indexName: this.state.selectedQuery.indexName,
             permitted:this.state.selectedQuery.permitted,
-            sql:this.state.selectedQuery.sql
+            cypher:this.state.selectedQuery.cypher
         }
         await this.props.setQuery(model);
-        this.getExecuteSQL();
+        this.getExecuteCypher();
         
     
     }
@@ -307,18 +307,18 @@ export class Execute extends Component {
             applicationId: appId,
             indexName: this.state.selectedQuery.indexName,
             permitted:this.state.selectedQuery.permitted,
-            sql:this.state.selectedQuery.sql
+            cypher:this.state.selectedQuery.cypher
         }
         await this.props.setQuery(model);
         this.createNew();
-        this.getExecuteSQL();
+        this.getExecuteCypher();
         
     
     }
     createNew() {
         let element = document.getElementsByName("selectIndex")[0];
         element.value = "0";
-        var empty = { indexName: "", sql: "", permitted: [] }
+        var empty = { indexName: "", cypher: "", permitted: [] }
         this.setState({ selectedQuery: empty, newIndex: true })
     }
     setVisible(vis) {
@@ -348,9 +348,9 @@ export class Execute extends Component {
     dropDownSelected(e) {
         var val = e.target.value;
         if (val !== "0") {
-            var empty = { indexName: "", sql: "", permitted: [] };
+            var empty = { indexName: "", cypher: "", permitted: [] };
             this.setState({ selectedQuery: empty, newIndex: false })
-            this.getSQL(val);
+            this.getCypher(val);
         }
     }
     render() {
@@ -360,7 +360,7 @@ export class Execute extends Component {
 
                 <CRow className='m-2 border-bottom d-flex align-items-center'>
                     <CCol className='col-6 pb-2'>
-                        <CCardTitle>Add/Update <b>"Execute SQL"</b> Permissions</CCardTitle>
+                        <CCardTitle>Add/Update <b>"Execute Cypher"</b> Permissions</CCardTitle>
                     </CCol>
                     
 

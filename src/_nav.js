@@ -66,11 +66,11 @@ const _nav = [
         name: 'Object Storage Service',
         to: '/perms/oss',
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Recommendation Service',
-      //   to: '/perms/recommendation',
-      // },
+      {
+        component: CNavItem,
+        name: 'Recommendation Service',
+        to: '/perms/recommendation',
+      },
     ]
   },
  /*  {
