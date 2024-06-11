@@ -7,6 +7,7 @@ import UpdateCollection from './updateCollection';
 import DeleteCollection from './deleteCollection';
 import DeleteRelation from './deleteRelation';
 import Execute from './execute';
+import ExecuteGC from './executeGC';
 import Login from './login';
 import { ToastContainer, toast,Slide } from 'react-toastify';
 import Popup from '../../../widgets/Popup';
@@ -59,7 +60,7 @@ export class Dataservice extends Component {
         super(props);
         this.state = {
             permissionItems: ["Create Collection", "Update Collection", "Delete Collection",
-                "Create Relation", "Delete Relation","Get Collections","Get Relations","Login","Execute SQL"],
+                "Create Relation", "Delete Relation","Get Collections","Get Relations","Login","Execute SQL","Execute Genetous"],
             collectionCreateRules: [],
             activeKey: 1,
             activeSubKeys: [1, 1, 1, 1, 1],
@@ -363,6 +364,64 @@ export class Dataservice extends Component {
         this.toastShow(type, message);
        
     }
+    async getGCQuery(model) {
+        var data=[]
+        var success=true;
+        await postWithSavedToken(model, Methods.GetGCQuery).then(function (result) {
+            data = result;
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        return data;
+       
+    }
+    async setGCQuery(model) {
+        var success=true;
+        await postWithSavedToken(model, Methods.SetGCQuery).then(function (result) {
+            success=result.success;
+            if (result.success == true) {
+                message = "Saved!"
+            } else {
+                message = result.message;
+            }
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        var type=success?"success":"error";
+        this.toastShow(type, message);
+       
+    }
+    async deleteGCQuery(model) {
+        var success=true;
+        await postWithSavedToken(model, Methods.DeleteGCQuery).then(function (result) {
+            success=result.success;
+            if (result.success == true) {
+                message = "Deleted!"
+            } else {
+                message = result.message;
+            }
+        }, err => {
+            if (err.status == 401) {
+                this.handleRedirect();
+            } else {
+                success=false;
+                message = err.message;
+            }
+        });
+        var type=success?"success":"error";
+        this.toastShow(type, message);
+       
+    }
     //////
     render() {
         const { redirect } = this.state;
@@ -526,6 +585,19 @@ export class Dataservice extends Component {
                                     delQuery={this.deleteQuery}
                                     setData={this.setData}
                                     position={9}  />
+                            }
+                            </CTabPane>
+                            <CTabPane role="tabpanel" aria-labelledby="contact-tab" visible={this.state.activeKey === 10}>
+                            {this.state.activeKey === 10 &&
+                                <ExecuteGC
+                                    handleRedirect={this.handleRedirect}
+                                    toastShow={this.toastShow}
+                                    getIndex={this.getIndex}
+                                    getQuery={this.getGCQuery}
+                                    setQuery={this.setGCQuery}
+                                    delQuery={this.deleteGCQuery}
+                                    setData={this.setData}
+                                    position={10}  />
                             }
                             </CTabPane>
                         </CTabContent>
