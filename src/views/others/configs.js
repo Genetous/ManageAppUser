@@ -62,6 +62,12 @@ export class Configs extends Component {
                     clusters: [],
                     userpass: "",
                     username: ""
+                },
+                redisData: {
+                    host: "",
+                    port: "0",
+                    password: "",
+                    username: ""
                 }
             },
             appSecret: "",
@@ -129,6 +135,16 @@ export class Configs extends Component {
         });
         if (!success)
             this.toastShow("error", message);
+        if(!d.hasOwnProperty("redisData")){
+            d["redisData"]=
+                 {
+                    host: "",
+                    port: "",
+                    password: "",
+                    username: ""
+                }
+            
+        }
         this.setState({ data: d });
         this.getAppSecret();
     }
@@ -375,7 +391,7 @@ export class Configs extends Component {
                                             active={this.state.activeKey === 6}
                                             onClick={this.setActiveKey.bind(this, 6)}
                                         >
-                                            Permitted Extensions
+                                            Redis
                                         </CNavLink>
                                     </CNavItem>
                                     <CNavItem>
@@ -383,6 +399,15 @@ export class Configs extends Component {
                                             style={vars}
                                             active={this.state.activeKey === 7}
                                             onClick={this.setActiveKey.bind(this, 7)}
+                                        >
+                                            Permitted Extensions
+                                        </CNavLink>
+                                    </CNavItem>
+                                    <CNavItem>
+                                        <CNavLink
+                                            style={vars}
+                                            active={this.state.activeKey === 8}
+                                            onClick={this.setActiveKey.bind(this, 8)}
                                         >
                                             App Secret Key
                                         </CNavLink>
@@ -637,6 +662,53 @@ export class Configs extends Component {
                                     <CTabPane role="tabpanel" className='p-3' aria-labelledby="contact-tab" visible={this.state.activeKey === 6}>
                                         <CFormInput
                                             type="text"
+                                            id="host"
+                                            name='host'
+                                            label="Redis Host"
+                                            placeholder="127.0.0.1"
+                                            value={this.state.data.redisData.host}
+                                            text=""
+                                            aria-describedby="exampleFormControlInputHelpInline"
+                                            onChange={this.changeData.bind(this, "redisData")}
+                                        />
+                                        <CFormInput
+                                            type="text"
+                                            id="port"
+                                            name='port'
+                                            label="Redis Port"
+                                            placeholder="Redis Port"
+                                            value={this.state.data.redisData.port}
+                                            text="Redis Port"
+                                            pattern="[0-9]*"
+                                            aria-describedby="exampleFormControlInputHelpInline"
+                                            onChange={this.changeData.bind(this, "redisData")} />
+                                        <CFormInput
+                                            type="text"
+                                            id="username"
+                                            name='username'
+                                            label="Username"
+                                            placeholder="John"
+                                            value={this.state.data.redisData.username}
+                                            text="Redis Credentials Username"
+                                            aria-describedby="exampleFormControlInputHelpInline"
+                                            onChange={this.changeData.bind(this, "redisData")}
+                                            autoComplete='new-username'
+                                        />
+                                        <CFormInput
+                                            type="password"
+                                            id="userpass"
+                                            name='password'
+                                            label="Password"
+                                            placeholder="******"
+                                            value={this.state.data.redisData.password}
+                                            text="Redis Credentials Password"
+                                            aria-describedby="exampleFormControlInputHelpInline"
+                                            onChange={this.changeData.bind(this, "redisData")}
+                                            autoComplete='new-password' />
+                                    </CTabPane>
+                                    <CTabPane role="tabpanel" className='p-3' aria-labelledby="contact-tab" visible={this.state.activeKey === 7}>
+                                        <CFormInput
+                                            type="text"
                                             id="ext"
                                             name='ext'
                                             label="Add Extensions"
@@ -653,7 +725,8 @@ export class Configs extends Component {
 
                                         </ul>
                                     </CTabPane>
-                                    <CTabPane role="tabpanel" className='p-3' aria-labelledby="contact-tab" visible={this.state.activeKey === 7}>
+                                    
+                                    <CTabPane role="tabpanel" className='p-3' aria-labelledby="contact-tab" visible={this.state.activeKey === 8}>
                                         <CFormInput
                                             type="text"
                                             id="appSecret"

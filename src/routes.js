@@ -6,6 +6,7 @@ const dataservicePerms = React.lazy(() => import('./views/others/rules/dataservi
 const publisherervicePerms = React.lazy(() => import('./views/others/rules/publisher/publisherService'))
 const ossPerms = React.lazy(() => import('./views/others/rules/oss/osService'))
 const recomPerms = React.lazy(() => import('./views/others/rules/recommendation/recommendation'))
+const redisPerms = React.lazy(() => import('./views/others/rules/redis/redisservice'))
 const applications = React.lazy(() => import('./views/others/applications'))
 
 const routes = [
@@ -15,7 +16,8 @@ const routes = [
   { path: '/perms/dataservice', name: 'Data Service Permissions', component: dataservicePerms },
   { path: '/perms/publisher', name: 'Publisher Service Permissions', component: publisherervicePerms },
   { path: '/perms/oss', name: 'Object Storage Service Permissions', component: ossPerms },
-  { path: '/perms/recommendation', name: 'Recommendation Service Permissions', component: recomPerms }
+  { path: '/perms/recommendation', name: 'Recommendation Service Permissions', component: recomPerms },
+  { path: '/perms/redis', name: 'Redis Service Permissions', component: redisPerms }
 
 ]
 

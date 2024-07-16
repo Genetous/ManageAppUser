@@ -71,6 +71,11 @@ const _nav = [
         name: 'Recommendation Service',
         to: '/perms/recommendation',
       },
+      {
+        component: CNavItem,
+        name: 'Redis Service',
+        to: '/perms/redis',
+      },
     ]
   },
  /*  {
